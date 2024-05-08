@@ -18,6 +18,7 @@ def webhook_callback(request_json):
     }
 
     requests.post(content['webhook_endpoint'], json=return_data, timeout=5)
+    print("Task was completed and sent.")
 
 @app.route('/', methods=['POST'])
 def index():
