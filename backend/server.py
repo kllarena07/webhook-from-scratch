@@ -1,10 +1,12 @@
 import requests
 import json
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import threading
 import time
 
 app = Flask(__name__)
+cors = CORS(app)
 
 def webhook_callback(request_json):
     time.sleep(3)
