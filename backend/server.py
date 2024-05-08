@@ -1,3 +1,4 @@
+import requests
 import json
 from flask import Flask, jsonify, request
 import threading
@@ -5,11 +6,16 @@ import time
 
 app = Flask(__name__)
 
-def print_args(request_json):
+def webhook_callback(request_json):
     time.sleep(3)
-    
+
     content = json.loads(request_json)
-    print(content['name'])
+
+    return_data = {
+      "message": "Task was completed."
+    }
+
+    requests.post(content['webhook_endpoint'], json=return_data, timeout=5)
 
 @app.route('/', methods=['POST'])
 def index():
@@ -17,7 +23,7 @@ def index():
 
     print("Starting task.")
     content = json.dumps(request.json)
-    threading.Thread(target=print_args, args=(content,)).start()
+    threading.Thread(target=webhook_callback, args=(content,)).start()
 
     return jsonify({"message": "Accepted"}), 202
 
