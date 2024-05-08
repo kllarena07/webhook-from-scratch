@@ -16,5 +16,5 @@ button.addEventListener("click", async () => {
 
   const json = await response.json();
 
-  pre.innerText = json;
+  pre.innerText = JSON.stringify(json);
 })
