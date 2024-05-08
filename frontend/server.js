@@ -10,11 +10,15 @@ const PORT = process.env.PORT || 3000;
 
 const staticDir = path.join(__dirname, 'src');
 
-app.use(express.static(staticDir));
+app.use(express.json())
 
 app.post("/webhook/call_back", (req, res) => {
-  console.log(req.body)
-})
+  const jsonData = req.body;
+  console.log('Received JSON data:', jsonData);
+  res.status(200).send('Data received successfully');
+});
+
+app.use(express.static(staticDir));
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
