@@ -12,6 +12,10 @@ const staticDir = path.join(__dirname, 'src');
 
 app.use(express.static(staticDir));
 
+app.post("/webhook/call_back", (req, res) => {
+  console.log(req.body)
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
