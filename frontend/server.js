@@ -18,6 +18,12 @@ app.post("/webhook/call_back", (req, res) => {
   res.status(200).send('Data received successfully');
 });
 
+app.use((req, res, next) => {
+  if (req.url === '/') console.log('New user connected:', req.url);
+
+  next();
+});
+
 app.use(express.static(staticDir));
 
 app.listen(PORT, () => {
