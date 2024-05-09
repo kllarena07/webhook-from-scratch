@@ -23,7 +23,7 @@ app.post("/webhook/call_back", (req, res) => {
 
 app.use(express.static(staticDir));
 
-app.use("/register", (req, res) => {
+app.get("/register", (req, res) => {
   const json_data = {
     message: "Welcome to the registration endpoint!"
   };
