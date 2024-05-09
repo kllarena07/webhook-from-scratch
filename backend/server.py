@@ -14,7 +14,8 @@ def webhook_callback(request_json):
     content = json.loads(request_json)
 
     return_data = {
-      "message": "Task was completed."
+      "message": "Task was completed.",
+      "id": content["id"]
     }
 
     requests.post(content['webhook_endpoint'], json=return_data, timeout=5)
