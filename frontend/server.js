@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -9,6 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const staticDir = path.join(__dirname, 'src');
+
+app.use(cors());
 
 app.use(express.json())
 
