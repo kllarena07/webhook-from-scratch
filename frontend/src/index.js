@@ -4,7 +4,7 @@ window.addEventListener('load', async () => {
 
   console.log(data);
 
-  const event_source = new EventSource("http://127.0.0.1:3000/stream");
+  const event_source = new EventSource("http://127.0.0.1:3000/webhook/call_back");
 
   event_source.addEventListener("message", (e) => {
     console.log(e);

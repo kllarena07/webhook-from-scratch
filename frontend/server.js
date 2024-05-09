@@ -21,14 +21,7 @@ app.post("/webhook/call_back", (req, res) => {
   res.status(200).send('Data received successfully');
 });
 
-app.get("/register", (req, res) => {
-  const json_data = {
-    message: "Welcome to the registration endpoint!"
-  };
-  res.json(json_data);
-});
-
-app.get("/stream", (req, res) => {
+app.get("/webhook/call_back", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
 
   for (let i = 0; i < 5; ++i) {
@@ -36,6 +29,13 @@ app.get("/stream", (req, res) => {
       res.write(`data: hello! i = ${i}\n\n`);
     }, (i + 1) * 1000);
   }
+});
+
+app.get("/register", (req, res) => {
+  const json_data = {
+    message: "Welcome to the registration endpoint!"
+  };
+  res.json(json_data);
 });
 
 app.use(express.static(staticDir));
