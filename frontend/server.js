@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json } from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import randomstring from 'randomstring';
@@ -16,15 +16,15 @@ app.use(cors());
 
 app.use(express.json())
 
-let clients = []
+let clients = [];
 
-app.post("/webhook/call_back", (req, res) => {
-  const jsonData = req.body;
-  console.log('Received JSON data:', jsonData);
+app.post("/webhook/callback", (req, res) => {
+  const json_data = req.body;
+  console.log('Received JSON data:', json_data);
   res.status(200).send('Data received successfully');
 });
 
-app.get("/webhook/call_back", (req, res) => {
+app.get("/webhook/callback", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
 
   for (let i = 0; i < 5; ++i) {
@@ -46,8 +46,6 @@ app.get("/register", (req, res) => {
     id,
     client_res: res
   });
-
-  console.log(clients.length);
 
   req.on('close', () => {
     console.log(`${id} Connection closed`);
