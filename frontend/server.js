@@ -18,13 +18,14 @@ app.post("/webhook/call_back", (req, res) => {
   res.status(200).send('Data received successfully');
 });
 
-app.use((req, res, next) => {
-  if (req.url === '/') console.log('New user connected:', req.url);
-
-  next();
-});
-
 app.use(express.static(staticDir));
+
+app.use("/", (req, res) => {
+  const json_data = {
+    message: "Welcome to the root endpoint!"
+  };
+  res.json(json_data);
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
