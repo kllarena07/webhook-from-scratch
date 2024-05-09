@@ -6,11 +6,7 @@ window.addEventListener('load', async () => {
 
   id = data.id;
 
-  // const event_source = new EventSource("http://127.0.0.1:3000/webhook/call_back");
-
-  // event_source.addEventListener("message", (e) => {
-  //   console.log(e);
-  // });
+  console.log(id);
 });
 
 const button = document.querySelector('button');
@@ -18,7 +14,7 @@ const pre = document.querySelector('pre');
 
 button.addEventListener("click", async () => {
   const data = {
-    "webhook_endpoint": "http://127.0.0.1:3000/webhook/call_back",
+    "webhook_endpoint": "http://127.0.0.1:3000/webhook/callback",
     "id": id
   };
 
@@ -33,4 +29,10 @@ button.addEventListener("click", async () => {
   const json = await response.json();
 
   pre.innerText = JSON.stringify(json);
+
+  const event_source = new EventSource(`http://127.0.0.1:3000/webhook/callback/${id}`);
+
+  event_source.addEventListener("message", (e) => {
+    console.log(JSON.parse(e.data));
+  });
 });

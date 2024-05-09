@@ -17,21 +17,30 @@ app.use(cors());
 app.use(express.json())
 
 let clients = [];
+let completed_jobs = [];
 
 app.post("/webhook/callback", (req, res) => {
   const json_data = req.body;
   console.log('Received JSON data:', json_data);
+
+  completed_jobs.push(json_data);
+
   res.status(200).send('Data received successfully');
 });
 
-app.get("/webhook/callback", (req, res) => {
+app.get("/webhook/callback/:id", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
 
-  for (let i = 0; i < 5; ++i) {
-    setTimeout(() => {
-      res.write(`data: hello! i = ${i}\n\n`);
-    }, (i + 1) * 1000);
-  }
+  const interval = setInterval(() => {
+    const job = completed_jobs.find(c => c.id === req.params.id);
+
+    if (job) {
+      clearInterval(interval);
+      res.write(`data: ${JSON.stringify(job)}\n\n`);
+
+      completed_jobs = completed_jobs.filter(curr_job => curr_job.id !== job.id);
+    }
+  }, 1000);
 });
 
 app.get("/register", (req, res) => {
@@ -44,11 +53,11 @@ app.get("/register", (req, res) => {
 
   clients.push({ 
     id,
-    client_res: res
+    res
   });
 
   req.on('close', () => {
-    console.log(`${id} Connection closed`);
+    console.log(`Register(54): ${id} Connection closed`);
     clients = clients.filter(client => client.id !== id);
   });
 
