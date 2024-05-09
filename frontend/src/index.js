@@ -3,6 +3,12 @@ window.addEventListener('load', async () => {
   const data = await response.json();
 
   console.log(data);
+
+  const event_source = new EventSource("http://127.0.0.1:3000/stream");
+
+  event_source.addEventListener("message", (e) => {
+    console.log(e);
+  });
 });
 
 const button = document.querySelector('button');

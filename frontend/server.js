@@ -28,6 +28,16 @@ app.get("/register", (req, res) => {
   res.json(json_data);
 });
 
+app.get("/stream", (req, res) => {
+  res.setHeader("Content-Type", "text/event-stream");
+
+  for (let i = 0; i < 5; ++i) {
+    setTimeout(() => {
+      res.write(`data: hello! i = ${i}\n\n`);
+    }, (i + 1) * 1000);
+  }
+});
+
 app.use(express.static(staticDir));
 
 app.listen(PORT, () => {
