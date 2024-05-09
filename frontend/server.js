@@ -21,14 +21,14 @@ app.post("/webhook/call_back", (req, res) => {
   res.status(200).send('Data received successfully');
 });
 
-app.use(express.static(staticDir));
-
 app.get("/register", (req, res) => {
   const json_data = {
     message: "Welcome to the registration endpoint!"
   };
   res.json(json_data);
 });
+
+app.use(express.static(staticDir));
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
