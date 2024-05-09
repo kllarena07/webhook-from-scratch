@@ -1,5 +1,12 @@
-const button = document.querySelector('button')
-const pre = document.querySelector('pre')
+window.addEventListener('load', async () => {
+  const response = await fetch('http://127.0.0.1:3000/register')
+  const data = await response.json();
+
+  console.log(data);
+});
+
+const button = document.querySelector('button');
+const pre = document.querySelector('pre');
 
 button.addEventListener("click", async () => {
   const data = {
@@ -17,4 +24,4 @@ button.addEventListener("click", async () => {
   const json = await response.json();
 
   pre.innerText = JSON.stringify(json);
-})
+});
