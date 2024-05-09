@@ -16,13 +16,13 @@ app.use(cors());
 
 app.use(express.json())
 
+let clients = []
+
 app.post("/webhook/call_back", (req, res) => {
   const jsonData = req.body;
   console.log('Received JSON data:', jsonData);
   res.status(200).send('Data received successfully');
 });
-
-let clients = []
 
 app.get("/webhook/call_back", (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
@@ -42,7 +42,10 @@ app.get("/register", (req, res) => {
     id
   };
 
-  clients.push({ id, res });
+  clients.push({ 
+    id,
+    client_res: res
+  });
 
   console.log(clients.length);
 
