@@ -10,7 +10,8 @@ window.addEventListener('load', async () => {
 });
 
 const button = document.querySelector('button');
-const pre = document.querySelector('pre');
+const initial = document.getElementById("initial");
+const final = document.getElementById("final");
 
 button.addEventListener("click", async () => {
   const data = {
@@ -28,11 +29,12 @@ button.addEventListener("click", async () => {
 
   const json = await response.json();
 
-  pre.innerText = JSON.stringify(json);
+  initial.innerText = JSON.stringify(json);
 
   const event_source = new EventSource(`http://127.0.0.1:3000/webhook/callback/${id}`);
 
   event_source.addEventListener("message", (e) => {
     console.log(JSON.parse(e.data));
+    final.innerText = e.data;
   });
 });
